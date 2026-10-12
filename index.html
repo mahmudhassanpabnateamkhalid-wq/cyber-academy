@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সাইবার সিকিউরিটি একাডেমি BD</title>
+    <style>
+        :root {
+            --bg-dark: #0a0f1d;
+            --bg-card: #111827;
+            --cyber-green: #00ff66;
+            --cyber-cyan: #00f0ff;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #1f2937;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+        
+        nav { background-color: var(--bg-card); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 50; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.8rem 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 6px; font-size: 1.15rem; font-weight: bold; color: white; cursor: pointer; }
+        .logo span { color: var(--cyber-green); }
+        .nav-links { display: flex; gap: 15px; align-items: center; font-size: 0.85rem; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+        .nav-links a:hover { color: var(--cyber-green); }
+        
+        .nav-actions { display: flex; gap: 8px; align-items: center; }
+        .search-input-nav { padding: 6px 12px; background: var(--bg-dark); border: 1px solid #374151; border-radius: 6px; color: white; font-size: 0.8rem; outline: none; }
+        .search-input-nav:focus { border-color: var(--cyber-green); }
+
+        .btn-login { background: #1f2937; border: 1px solid #374151; color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+        .btn-dash { background: var(--cyber-green); color: var(--bg-dark); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; border: none; cursor: pointer; }
+        .user-badge { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; border: 1px solid #374151; font-size: 0.8rem; }
+
+        main { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem; }
+        .hero { background: linear-gradient(135deg, rgba(17,24,39,0.9), rgba(10,15,29,0.95)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200') center/cover; border: 1px solid var(--border-color); border-radius: 20px; padding: 3rem 1rem; text-align: center; margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .hero-tag { background: rgba(0,255,102,0.15); border: 1px solid rgba(0,255,102,0.3); color: var(--cyber-green); font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 1rem; font-weight: 600; }
+        .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.3; }
+        .hero h1 span { color: var(--cyber-green); }
+        .hero p { color: var(--text-muted); max-width: 700px; margin: 0 auto 2rem; font-size: 0.875rem; line-height: 1.6; }
+        
+        .hero-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .btn-main { background: var(--cyber-green); color: var(--bg-dark); padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
+
+        .dashboard-container { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px; }
+        .dash-title { font-size: 1.3rem; font-weight: bold; color: white; }
+        .dash-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .dash-card { background: var(--bg-dark); border: 1px solid #374151; padding: 1rem; border-radius: 10px; text-align: center; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 2.5rem; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; text-align: center; }
+        .stat-card h3 { font-size: 1.25rem; font-weight: 800; color: var(--cyber-green); margin-bottom: 4px; }
+        .stat-card p { font-size: 0.75rem; color: var(--text-muted); }
+
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 10px; }
+        .section-header h2 { font-size: 1.2rem; font-weight: bold; border-left: 4px solid var(--cyber-green); padding-left: 8px; }
+        .filter-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; transition: 0.3s; }
+        .tab-btn.active, .tab-btn:hover { background: var(--cyber-green); color: var(--bg-dark); border-color: var(--cyber-green); font-weight: bold; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
+        .card:hover { border-color: rgba(0,255,102,0.4); transform: translateY(-3px); }
+        .card-img { height: 160px; position: relative; background: #1a233a; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--cyber-green); font-weight: bold; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .badge { position: absolute; top: 10px; left: 10px; background: rgba(10,15,29,0.9); border: 1px solid rgba(0,255,102,0.3); color: var(--cyber-green); font-size: 0.7rem; padding: 3px 10px; border-radius: 20px; }
+        .rating { position: absolute; top: 10px; right: 10px; background: rgba(10,15,29,0.9); color: #facc15; font-size: 0.75rem; padding: 3px 8px; border-radius: 20px; font-weight: bold; }
+        
+        .card-body { padding: 1.2rem; }
+        .author { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+        .card-title { font-size: 1.05rem; font-weight: bold; margin-bottom: 8px; color: white; line-height: 1.4; }
+        .card-desc { font-size: 0.8rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 1rem; line-height: 1.5; }
+        
+        .card-footer { padding: 1rem 1.2rem; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .price-box { display: flex; flex-direction: column; }
+        .old-price { font-size: 0.75rem; color: var(--text-muted); text-decoration: line-through; }
+        .price { font-size: 1.15rem; font-weight: 800; color: var(--cyber-green); }
+        .btn-enroll { background: rgba(0,255,102,0.1); border: 1px solid var(--cyber-green); color: var(--cyber-green); padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-enroll:hover { background: var(--cyber-green); color: var(--bg-dark); }
+
+        .reviews-section { margin-top: 4rem; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .review-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
+        .review-card:hover { border-color: rgba(0,255,102,0.3); }
+        .star-rating { color: #facc15; font-size: 0.85rem; margin-bottom: 8px; }
+        .review-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.6; }
+        .reviewer-info { display: flex; align-items: center; gap: 12px; }
+        .reviewer-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--cyber-green); }
+        .reviewer-name { font-size: 0.9rem; font-weight: bold; color: white; }
+        .reviewer-title { font-size: 0.75rem; color: var(--text-muted); }
+
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; max-width: 450px; width: 100%; padding: 1.5rem; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; }
+        
+        .form-group { margin-bottom: 0.9rem; }
+        .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; background: var(--bg-dark); border: 1px solid #374151; border-radius: 8px; color: white; outline: none; font-size: 0.85rem; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--cyber-green); }
+
+        .info-box { background: var(--bg-dark); border: 1px solid var(--cyber-green); border-radius: 10px; padding: 12px; text-align: center; margin-bottom: 1rem; }
+        .info-box p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 3px; }
+        .phone-highlight { color: var(--cyber-green); font-weight: bold; font-family: monospace; font-size: 1.15rem; letter-spacing: 0.5px; margin-top: 4px; }
+
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); margin-top: 4rem; color: var(--text-muted); font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="showMainView()">
+                🛡️ সাইবার সিকিউরিটি <span>BD</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="showMainView()">হোমকোর্সসমূহ</a>
+                <a href="#reviewsSection">রিভিউ মতামত</a>
+                <a href="#">আমাদের সম্পর্কে</a>
+                <a href="#">যোগাযোগ</a>
+            </div>
+            <div class="nav-actions">
+                <input type="text" id="searchInput" oninput="filterCourses()" class="search-input-nav" placeholder="কোর্স খুঁজুন...">
+                <div id="loggedOutNav">
+                    <button onclick="openModal('authModal')" class="btn-login">Login / Sign Up</button>
+                </div>
+                <div id="loggedInNav" style="display: none; align-items: center; gap: 8px;">
+                    <div class="user-badge">
+                        👤 <span id="navUserName">কাস্টমার</span>
+                    </div>
+                    <button onclick="toggleDashboard()" class="btn-dash">Dashboard</button>
+                    <button onclick="logout()" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:0.8rem; font-weight:bold;">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div id="dashboardSection" class="dashboard-container">
+            <div class="dashboard-header">
+                <div class="dash-title">স্বাগতম, <span id="dashStudentName">কাস্টমার</span>! 👋</div>
+                <button onclick="showMainView()" class="btn-login">🛒 নতুন কোর্স ব্রাউজ করুন</button>
+            </div>
+            <div class="dash-stats">
+                <div class="dash-card">
+                    <h4 style="color: var(--cyber-green); font-size: 1.3rem;" id="enrolledCount">০</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">আমার কেনা কোর্স</p>
+                </div>
+                <div class="dash-card">
+                    <h4 style="color: var(--cyber-cyan); font-size: 1.3rem;">সক্রিয়</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">স্টুডেন্ট একাউন্ট</p>
+                </div>
+            </div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-left: 3px solid var(--cyber-green); padding-left: 8px;">আমার কেনা কোর্সসমূহ (My Enrolled Courses)</h3>
+            <div id="myCoursesGrid" class="grid"></div>
+        </div>
+
+        <div id="heroSection" class="hero">
+            <span class="hero-tag">বাংলাদেশের সেরা অনলাইন সাইবার সিকিউরিটি লার্নিং প্ল্যাটফর্ম</span>
+            <h1>আপনার সাইবার সিকিউরিটি ক্যারিয়ার শুরু হোক <span>এখান থেকেই!</span></h1>
+            <p>এথিক্যাল হ্যাকিং, ওয়েব পেনিট্রেশন টেস্টিং, নেটওয়ার্ক সিকিউরিটি এবং সাইবার ফরেন্সিক শিখুন ১০০% প্র্যাকটিক্যাল ল্যাব ও রিয়েল ওয়ার্ল্ড প্রজেক্টের সাথে।</p>
+            <div class="hero-btns">
+                <button class="btn-main" onclick="document.getElementById('coursesHeader').scrollIntoView({behavior: 'smooth'})">🚀 পছন্দ মতো কোর্স বেছে নিন</button>
+            </div>
+        </div>
+
+        <div id="statsSection" class="stats-grid">
+            <div class="stat-card"><h3>৫,০০০+</h3><p>সক্রিয় শিক্ষার্থী</p></div>
+            <div class="stat-card"><h3>২০+</h3><p>প্র্যাকটিক্যাল প্রজেক্ট</p></div>
+            <div class="stat-card"><h3>১০০%</h3><p>হ্যান্ডস-অন ল্যাব</p></div>
+            <div class="stat-card"><h3>৪.৯ ⭐</h3><p>শিক্ষার্থী রেটিং</p></div>
+        </div>
+
+        <div id="coursesHeader" class="section-header">
+            <h2>আমাদের জনপ্রিয় কোর্সসমূহ</h2>
+            <div class="filter-tabs">
+                <button class="tab-btn active" onclick="setCategory('all', this)">সব</button>
+                <button class="tab-btn" onclick="setCategory('Ethical Hacking', this)">এথিক্যাল হ্যাকিং</button>
+                <button class="tab-btn" onclick="setCategory('Web Security', this)">ওয়েব সিকিউরিটি</button>
+                <button class="tab-btn" onclick="setCategory('Networking', this)">নেটওয়ার্কিং</button>
+                <button class="tab-btn" onclick="setCategory('Forensics', this)">ফরেন্সিক</button>
+            </div>
+        </div>
+
+        <div id="coursesGrid" class="grid"></div>
+
+        <div id="reviewsSection" class="reviews-section">
+            <div class="section-header">
+                <h2>শিক্ষার্থীদের রিভিউ ও মতামত</h2>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div>
+                        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="review-text">"ওয়েব পেনিট্রেশন টেস্টিং কোর্সটি করে আমি রিয়েল-ওয়ার্ল্ড ওয়েবের অনেক সিকিউরিটি লুপহোল সম্পর্কে পরিষ্কার ধারণা পেয়েছি। ইন্সট্রাক্টরের প্র্যাকটিক্যাল সেশনগুলো অসাধারণ ছিল।"</p>
+                    </div>
+                    <div class="reviewer-info">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="রিফাত আহমেদ" class="reviewer-avatar">
+                        <div>
+                            <div class="reviewer-name">রিফাত আহমেদ</div>
+                            <div class="reviewer-title">জুনিয়র পেনিট্রেশন টেস্টার</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div>
+                        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="review-text">"এথিক্যাল হ্যাকিং জিরো টু হিরো কোর্সটি আমার ক্যারিয়ার সম্পূর্ণ বদলে দিয়েছে। এখন আমি নিজেই বিভিন্ন প্রজেক্টে সিকিউরিটি অডিট করতে পারছি। ধন্যবাদ একাডেমিকে!"</p>
+                    </div>
+                    <div class="reviewer-info">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150" alt="নাজমুল ইসলাম" class="reviewer-avatar">
+                        <div>
+                            <div class="reviewer-name">নাজমুল ইসলাম</div>
+                            <div class="reviewer-title">সাইবার সিকিউরিটি অ্যানালিস্ট</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div>
+                        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="review-text">"বিকাশ বা নগদে পেমেন্ট করার পর খুব দ্রুতই আমার ড্যাশবোর্ডে কোর্সটি অ্যাক্টিভ করে দেওয়া হয়েছিল। লার্নিং ইন্টারফেসটি একদম প্রিমিয়াম ও গোছানো।"</p>
+                    </div>
+                    <div class="reviewer-info">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150" alt="তানভীর রহমান" class="reviewer-avatar">
+                        <div>
+                            <div class="reviewer-name">তানভীর রহমান</div>
+                            <div class="reviewer-title">ইথিক্যাল হ্যাকিং লার্নার</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div>
+                        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="review-text">"ডিজিটাল ফরেন্সিক ও ইনসিডেন্ট রেসপন্স কোর্সটির মডিউলগুলো ইন্ডাস্ট্রি স্ট্যান্ডার্ড অনুযায়ী সাজানো। যারা প্রফেশনাল হতে চান তাদের জন্য বেস্ট প্ল্যাটফর্ম।"</p>
+                    </div>
+                    <div class="reviewer-info">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="নুসরাত জাহান" class="reviewer-avatar">
+                        <div>
+                            <div class="reviewer-name">নুসরাত জাহান</div>
+                            <div class="reviewer-title">সিকিউরিটি কনসালটেন্ট</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div>
+                        <div class="star-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="review-text">"রেড টিম অপারেশন এবং এডভান্সড এক্সপ্লয়েট ডেভেলপমেন্টের ক্লাসগুলো থেকে যা শিখেছি তা আমার প্রফেশনাল লাইফে দারুণ কাজে দিচ্ছে। হাইলি রিকমেন্ডেড!"</p>
+                    </div>
+                    <div class="reviewer-info">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=150" alt="শরিফুল আলম" class="reviewer-avatar">
+                        <div>
+                            <div class="reviewer-name">শরিফুল আলম</div>
+                            <div class="reviewer-title">বগ বাউন্টি হান্টার</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 সাইবার সিকিউরিটি একাডেমি BD. All rights reserved.</p>
+    </footer>
+
+    <div id="enrollModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('enrollModal')">&times;</button>
+            <h3 style="margin-bottom: 0.4rem; color: white; font-size: 1.1rem;">কোর্স এনরোলমেন্ট পেমেন্ট</h3>
+            <p id="enrollCourseName" style="color: var(--cyber-green); font-size: 0.8rem; margin-bottom: 1rem;"></p>
+            
+            <div class="info-box">
+                <p><b>পেমেন্ট করার নিয়ম (Send Money):</b></p>
+                <p>বিকাশ অথবা নগদ থেকে সেন্ড মানি করুন:</p>
+                <p class="phone-highlight">bKash / Nagad: 01366713596</p>
+            </div>
+
+            <form onsubmit="handlePayment(event)">
+                <div class="form-group"><label>আপনার পূর্ণ নাম</label><input type="text" id="studentName" required></div>
+                <div class="form-group"><label>ইমেইল ঠিকানা</label><input type="email" id="studentEmail" required></div>
+                <div class="form-group">
+                    <label>পেমেন্ট মেথড</label>
+                    <select id="paymentMethod">
+                        <option value="bKash">bKash (Send Money)</option>
+                        <option value="Nagad">Nagad (Send Money)</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>যে নম্বর থেকে টাকা পাঠিয়েছেন</label><input type="text" id="senderNumber" required placeholder="017XXXXXXXX"></div>
+                <div class="form-group"><label>ট্রানজেকশন আইডি (TrxID)</label><input type="text" id="trxId" required placeholder="যেমন: 9N87G6F5"></div>
+                <button type="submit" class="btn-main" style="width: 100%; justify-content: center; margin-top: 5px;">পেমেন্ট সাবমিট করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('authModal')">&times;</button>
+            <h3 id="authTitle" style="margin-bottom: 1rem; color: white; text-align: center; font-size: 1.1rem;">লগইন করুন</h3>
+            <form onsubmit="handleAuth(event)">
+                <div class="form-group" id="nameGroup" style="display: none;">
+                    <label>আপনার নাম</label>
+                    <input type="text" id="authName" placeholder="আপনার পূর্ণ নাম">
+                </div>
+                <div class="form-group">
+                    <label>ইমেইল</label>
+                    <input type="email" id="authEmail" required placeholder="example@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label>পাসওয়ার্ড</label>
+                    <input type="password" id="authPassword" required placeholder="**">
+                </div>
+                <button type="submit" class="btn-main" style="width: 100%; justify-content: center; margin-bottom: 0.85rem;" id="authBtn">লগইন</button>
+                <div style="text-align: center;">
+                    <button type="button" onclick="toggleAuth()" style="background:none; border:none; color:var(--cyber-cyan); cursor:pointer; font-size:0.8rem;" id="authToggleText">অ্যাকাউন্ট নেই? সাইন আপ করুন</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let courses = [
+            { id: 1, title: "কমপ্লিট এথিক্যাল হ্যাকিং মাস্টারক্লাস", category: "Ethical Hacking", author: "ইনস্ট্রাক্টর: ইমতিয়াজ আল হাসান", rating: "4.9", badge: "বেস্ট সেলার", price: 2500, oldPrice: 5000, image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=600", description: "অ্যাডভান্সড এথিক্যাল হ্যাকিংয়ের খুঁটিনাটি, নেটওয়ার্ক হ্যাকিং, ওয়াইফাই এবং রিয়েলওয়ার্ল্ড প্র্যাকটিক্যাল।" },
+            { id: 2, title: "ওয়েব অ্যাপ্লিকেশন পেনিট্রেশন টেস্টিং", category: "Web Security", author: "ইনস্ট্রাক্টর: তানভীর আহমেদ", rating: "4.8", badge: "জনপ্রিয়", price: 3000, oldPrice: 6000, image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600", description: "OWASP Top 10 ভ্যালনারেবিলিটি যেমন SQLi, XSS, CSRF ইত্যাদি হ্যাকিং শিখুন ও রিয়েল লাইফ ফিক্স করার উপায়।" },
+            { id: 3, title: "নেটওয়ার্ক ডিফেন্স অ্যান্ড সিকিউরিটি অপারেশন", category: "Networking", author: "ইনস্ট্রাক্টর: ফাহিম ফয়সাল", rating: "4.9", badge: "প্রফেশনাল", price: 2000, oldPrice: 4000, image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600", description: "ফায়ারওয়াল কনফিগারেশন, ট্রাফিক অ্যানালাইসিস এবং নেটওয়ার্ক থ্রেট ডিটেকশন ও প্রিভেনশন শিখুন।" },
+            { id: 4, title: "এডভান্সড পেনিট্রেশন টেস্টিং ও রেড টিম অপারেশন", category: "Ethical Hacking", author: "ইনস্ট্রাক্টর: সাকিব আল হাসান", rating: "5.0", badge: "এক্সক্লুসিভ", price: 4000, oldPrice: 8000, image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600", description: "এন্টারপ্রাইজ লেভেলে রেড টিম অপারেশন এবং এডভান্সড এক্সপ্লয়েট ডেভেলপমেন্ট শিখুন।" },
+            { id: 5, title: "ডিজিটাল ফরেন্সিক ও ইনসিডেন্ট রেসপন্স (DFIR)", category: "Forensics", author: "ইনস্ট্রাক্টর: রাহাত হোসেন", rating: "4.7", badge: "নতুন", price: 3500, oldPrice: 7000, image: "https://images.unsplash.com/photo-1510519138161-5994d8d179c3?auto=format&fit=crop&q=80&w=600", description: "সাইবার ক্রাইম ইনভেস্টিগেশন, মেমোরি অ্যানালাইসিস এবং ডিজিটাল এভিডেন্স হ্যান্ডলিং।" },
+            { id: 6, title: "মোবাইল অ্যাপ পেনিট্রেশন টেস্টিং (Android & iOS)", category: "Web Security", author: "ইনস্ট্রাক্টর: নাফিস ইকবাল", rating: "4.9", badge: "হট", price: 3200, oldPrice: 6500, image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=600", description: "অ্যান্ড্রয়েড ও আইওএস অ্যাপের সিকিউরিটি অ্যানালাইসিস, রিভার্স ইঞ্জিনিয়ারিং এবং ভালনারেবিলিটি ফাইন্ডিং।" }
+        ];
+
+        let currentUser = null;
+        let enrolledCourses = [];
+        let selectedCategory = 'all';
+        let selectedCourseObj = null;
+        let isSignup = false;
+
+        function renderCourses(data) {
+            const grid = document.getElementById('coursesGrid');
+            if(data.length === 0) {
+                grid.innerHTML = <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">কোনো কোর্স পাওয়া যায়নি।</p>;
+                return;
+            }
+            grid.innerHTML = data.map(c => `
+                <div class="card">
+                    <div>
+                        <div class="card-img">
+                            <img src="${c.image}" alt="${c.title}">
+                            <span class="badge">${c.badge}</span>
+                            <span class="rating">⭐ ${c.rating}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="author">👤 ${c.author}</div>
+                            <h3 class="card-title">${c.title}</h3>
+                            <p class="card-desc">${c.description}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="price-box">
+                            <span class="old-price">৳ ${c.oldPrice}</span>
+                            <span class="price">৳ ${c.price}</span>
+                        </div>
+                        <button onclick="enrollCourse(${c.id})" class="btn-enroll">এনরোল করুন</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMyCourses() {
+            const myGrid = document.getElementById('myCoursesGrid');
+            document.getElementById('enrolledCount').innerText = enrolledCourses.length;
+            if(enrolledCourses.length === 0) {
+                myGrid.innerHTML = <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 1.5rem; background: var(--bg-dark); border-radius: 10px;">আপনি এখনো কোনো কোর্স কেনেননি। ক্যাটালগ থেকে কোর্স বেছে নিন!</p>;
+                return;
+            }
+            myGrid.innerHTML = enrolledCourses.map(c => `
+                <div class="card" style="border-color: var(--cyber-green);">
+                    <div>
+                        <div class="card-img">
+                            <img src="${c.image}" alt="${c.title}">
+                            <span class="badge" style="background: var(--cyber-green); color: var(--bg-dark);">Enrolled</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${c.title}</h3>
+                            <p class="card-desc">${c.description}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn-main" style="width:100%; justify-content:center; padding: 6px 12px;">▶️ ক্লাস শুরু করুন</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setCategory(cat, btn) {
+            selectedCategory = cat;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterCourses();
+        }
+
+        function filterCourses() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = courses.filter(c => {
+                const qMatch = c.title.toLowerCase().includes(query) || c.description.toLowerCase().includes(query) || c.author.toLowerCase().includes(query);
+                const cMatch = selectedCategory === 'all' || c.category === selectedCategory;
+                return qMatch && cMatch;
+            });
+            renderCourses(filtered);
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function enrollCourse(courseId) {
+            if(!currentUser) {
+                alert("কোর্স কেনার জন্য প্রথমে লগইন করুন!");
+                openModal('authModal');
+                return;
+            }
+            const course = courses.find(c => c.id === courseId);
+            selectedCourseObj = course;
+            document.getElementById('enrollCourseName').innerText = নির্বাচিত কোর্স: ${course.title} (মূল্য: ৳${course.price});
+            document.getElementById('studentName').value = currentUser.name;
+            document.getElementById('studentEmail').value = currentUser.email;
+            openModal('enrollModal');
+        }
+
+        function handlePayment(e) {
+            e.preventDefault();
+            if(selectedCourseObj) {
+                enrolledCourses.push(selectedCourseObj);
+                renderMyCourses();
+            }
+            alert("পেমেন্ট তথ্য সফলভাবে সাবমিট হয়েছে! আপনার কাস্টমার ড্যাশবোর্ডে কোর্সটি অ্যাক্টিভ হিসেবে জমা হয়েছে।");
+            closeModal('enrollModal');
+            showDashboardView();
+        }
+
+        function toggleAuth() {
+            isSignup = !isSignup;
+            document.getElementById('authTitle').innerText = isSignup ? "সাইন আপ করুন" : "লগইন করুন";
+            document.getElementById('authBtn').innerText = isSignup ? "সাইন আপ" : "লগইন";
+            document.getElementById('authToggleText').innerText = isSignup ? "ইতিমধ্যে অ্যাকাউন্ট আছে? লগইন করুন" : "অ্যাকাউন্ট নেই? সাইন আপ করুন";
+            document.getElementById('nameGroup').style.display = isSignup ? "block" : "none";
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const name = isSignup ? document.getElementById('authName').value : email.split('@')[0];
+
+            if (isSignup) {
+                alert("সাইন আপ সফল হয়েছে! এখন আপনার ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন।");
+                toggleAuth();
+                document.getElementById('authEmail').value = email;
+                document.getElementById('authPassword').value = '';
+                return;
+            }
+
+            currentUser = { name: name || "কাস্টমার", email: email };
+            document.getElementById('navUserName').innerText = currentUser.name;
+            document.getElementById('dashStudentName').innerText = currentUser.name;
+            document.getElementById('loggedOutNav').style.display = "none";
+            document.getElementById('loggedInNav').style.display = "flex";
+            closeModal('authModal');
+            alert("লগইন সফল হয়েছে!");
+            showDashboardView();
+        }
+
+        function logout() {
+            currentUser = null;
+            enrolledCourses = [];
+            document.getElementById('loggedOutNav').style.display = "block";
+            document.getElementById('loggedInNav').style.display = "none";
+            showMainView();
+            alert("লগআউট সফল হয়েছে।");
+        }
+
+        function toggleDashboard() {
+            const dash = document.getElementById('dashboardSection');
+            if(dash.style.display === "block") { showMainView(); } else { showDashboardView(); }
+        }
+
+        function showDashboardView() {
+            document.getElementById('dashboardSection').style.display = "block";
+            document.getElementById('heroSection').style.display = "none";
+            document.getElementById('statsSection').style.display = "none";
+            renderMyCourses();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showMainView() {
+            document.getElementById('dashboardSection').style.display = "none";
+            document.getElementById('heroSection').style.display = "block";
+            document.getElementById('statsSection').style.display = "grid";
+        }
+
+        renderCourses(courses);
+    </script>
+</body>
+</html>
